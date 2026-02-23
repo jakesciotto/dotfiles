@@ -1,0 +1,19 @@
+# Claude Code runtime data (managed by claude, not chezmoi)
+.claude/debug
+.claude/file-history
+.claude/backups
+.claude/cache
+.claude/downloads
+.claude/plugins
+.claude/projects
+.claude/session-env
+.claude/shell-snapshots
+.claude/ide
+.claude/paste-cache
+.claude/plans
+.claude/history.jsonl
+.claude/settings.local.json
+.claude/security_warnings_state_*
+
+# Archive directory (reference only, not deployed to home)
+archive
