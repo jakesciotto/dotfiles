@@ -1,18 +1,20 @@
 # dotfiles
 
-*wow, finally getting around to synchronizing dotfiles across 3 macbooks in use*
+Managed with [chezmoi](https://chezmoi.io). Files use `dot_` prefix convention.
 
-## files
+## Managed
 
-#### `.zshrc`
+- `.zshrc` -- shell config, aliases, gdircolors integration
+- `.dir_colors` -- terminal colorization rules (256-color)
+- `.bash_profile` -- legacy bash config
+- `.claude/` -- Claude Code settings and project rules
 
-- includes some fun usability shortcuts i cannot live without 
-- requirements: gnu coreutils; eval statement in the shell to point at the next
+## Layout
 
-#### `.dir_colors`
-
-- contains explicit terminal colorization rules that probably need overhaul (i chose them all in undergrad okay)
-
-#### `claude.md`
-
-- my ever-expanding requirements for claude re: verbosity, semantic versioning, and general style
+```
+dot_zshrc           -> ~/.zshrc
+dot_dir_colors      -> ~/.dir_colors
+dot_bash_profile    -> ~/.bash_profile
+dot_claude/         -> ~/.claude/
+archive/            -> not deployed, historical reference
+```
