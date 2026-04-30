@@ -1,3 +1,6 @@
+# Default editor
+export EDITOR='vim'
+
 # Evaluations
 eval $(/opt/homebrew/bin/brew shellenv)
 
@@ -23,13 +26,15 @@ path=(
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias docs='cd /Users/jakesciotto/Documents/customers'
 alias ls='gls --color=auto'
 alias ll='ls -al'
 alias path='echo -e ${PATH//:/\\n}'
 alias trash='trash -v'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
-alias refresh='source ~/.zshrc'
+alias refresh='source ~/.zshrc ~/.vimrc'
+alias tokens='npx ccusage@latest blocks --live'
 
 # Networking
 alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
