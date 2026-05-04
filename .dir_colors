@@ -63,28 +63,25 @@ TERM xterm-88color
 TERM xterm-color
 TERM xterm-debian
 
-NORMAL                     00;38;5;244 # no color code at all
-#FILE                     00 # regular file: use no color at all
-RESET                     0 # reset to "normal" color
-DIR                     00;38;5;33 # directory 01;34
-LINK                     00;38;5;37 # symbolic link. (If you set this to 'target' instead of a
-MULTIHARDLINK             00 # regular file with more than one link
-FIFO                     48;5;230;38;5;136;01 # pipe
-SOCK                     48;5;230;38;5;136;01 # socket
-DOOR                     48;5;230;38;5;136;01 # door
-BLK                     48;5;230;38;5;244;01 # block device driver
-CHR                     48;5;230;38;5;244;01 # character device driver
-ORPHAN                     48;5;235;38;5;160 # symlink to nonexistent file, or non-statable file
-SETUID                     48;5;160;38;5;230 # file that is setuid (u+s)
-SETGID                     48;5;136;38;5;230 # file that is setgid (g+s)
-CAPABILITY                 30;41 # file with capability
-STICKY_OTHER_WRITABLE     48;5;64;38;5;230 # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE             48;5;235;38;5;33 # dir that is other-writable (o+w) and not sticky
-STICKY                     48;5;33;38;5;230 # dir with the sticky bit set (+t),  not other-writable
+BLK                   38;5;68             # core
+CAPABILITY            38;5;17             # core
+CHR                   38;5;113;1          # core
+DIR                   38;5;33             # core
+DOOR                  38;5;127            # core
+EXEC                  38;5;208;1          # core
+FIFO                  38;5;126            # core
+FILE                  0                   # core
+LINK                  38;5;122            # core
+MULTIHARDLINK         38;5;222;1          # core
+NORMAL                0                   # core
+ORPHAN                48;5;196;38;5;232;1 # core
+OTHER_WRITABLE        38;5;220;1          # core
+SETGID                48;5;3;38;5;0       # core
+SETUID                38;5;220;1;3;100;1  # core
+SOCK                  38;5;197            # core
+STICKY                38;5;86;48;5;234    # core
+STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3 # core
 
-# This is for files with execute permission:
-EXEC 00;38;5;3
-#EXEC 0
 
 # ------------------------------------------------
 # :: 1. Archives and compressed (muted blue)
@@ -260,7 +257,7 @@ EXEC 00;38;5;3
 .mobi   00;38;5;38
 .txt    00;38;5;51
 .csv    00;38;5;98
-.md     00;38;5;187
+.md     00;38;5;118
 .psd    00;38;5;163
 .xd     00;38;5;134
 
@@ -362,6 +359,7 @@ EXEC 00;38;5;3
 # :: 7. Markup, config, and data
 # ------------------------------------------------
 .json   00;38;5;197
+.cfg    00;38;5;109
 .yaml   00;38;5;109
 .yml    00;38;5;109
 .toml   00;38;5;109
@@ -441,17 +439,37 @@ EXEC 00;38;5;3
 .diff   00;38;5;240
 
 # ------------------------------------------------
-# :: 11. Special files
+# :: 11. Documentation
 # ------------------------------------------------
-*README.md       00;38;5;11
-*README.markdown 00;38;5;11
-*README          00;38;5;11
+
+*README               38;5;220;1
+*README.rst           38;5;220;1     
+*LICENSE              38;5;220;1   
+*COPYING              38;5;220;1     
+*INSTALL              38;5;220;1     
+*COPYRIGHT            38;5;220;1     
+*AUTHORS              38;5;220;1 
+*HISTORY              38;5;220;1
+*CONTRIBUTORS         38;5;220;1
+*CONTRIBUTING         38;5;220;1 
+*CHANGELOG            38;5;220;1 
+*CODEOWNERS           38;5;220;1    
+*PATENTS              38;5;220;1
+*VERSION              38;5;220;1   
+*NOTICE               38;5;220;1 
+*CHANGES              38;5;220;1 
+
+# ------------------------------------------------
+# :: 12. Special files
+# ------------------------------------------------
 *rc              00;38;5;245
 *1               00;38;5;245
 .torrent         00;38;5;245
-*.mindnode       00;38;5;159
-.dir_colors      00;38;5;9
-.zshrc           00;38;5;9
-.zprofile        00;38;5;9
-.zsh_history     00;38;5;9
-.vimrc           00;38;5;9
+*.mindnode       00;38;5;245
+.dir_colors      00;38;5;30
+.zshrc           00;38;5;30
+.zprofile        00;38;5;30
+.zsh_history     00;38;5;30
+.vimrc           00;38;5;30
+.viminfo         00;38;5;30
+*.claude.json    00;38;5;134

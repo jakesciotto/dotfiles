@@ -33,7 +33,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias trash='trash -v'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
-alias refresh='source ~/.zshrc ~/.vimrc'
+alias refresh='source ~/.zshrc'
 alias tokens='npx ccusage@latest blocks --live'
 
 # Networking
