@@ -39,3 +39,18 @@ alias tokens='npx ccusage@latest blocks --live'
 # Networking
 alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
 alias ip='ipconfig getifaddr en0'
+
+# Copy and paste
+
+autoload -Uz bracketed-paste-magic                            
+zle -N bracketed-paste bracketed-paste-magic                       
+
+_paste_strip_ws() {                                           
+    PASTED=${PASTED//$'\r'/$'\n'}                               
+    PASTED=$(print -r -- "$PASTED" | sed -E 's/^[[:space:]]+//')
+  } 
+
+zstyle :bracketed-paste-magic paste-init _paste_strip_ws      
+# Initialize direnv - added by PostHog's Flox activation hook (../posthog/.flox/env/manifest.toml)
+eval "$(direnv hook zsh)"
+export COMPOSE_HTTP_TIMEOUT=300
