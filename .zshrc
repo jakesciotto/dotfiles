@@ -1,3 +1,10 @@
+# ----------------------------------------
+# .zshrc
+# 
+# Standard commands and settings across machines
+# ----------------------------------------
+
+
 # Default editor
 export EDITOR='vim'
 
@@ -40,6 +47,7 @@ alias tokens='npx ccusage@latest blocks --live'
 alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
 alias ip='ipconfig getifaddr en0'
 
+<<<<<<< Updated upstream
 # Copy and paste
 
 autoload -Uz bracketed-paste-magic                            
@@ -54,3 +62,9 @@ zstyle :bracketed-paste-magic paste-init _paste_strip_ws
 # Initialize direnv - added by PostHog's Flox activation hook (../posthog/.flox/env/manifest.toml)
 eval "$(direnv hook zsh)"
 export COMPOSE_HTTP_TIMEOUT=300
+=======
+# Binds correctly the option+left arrow and option+right arrow key combindations
+# that the shell is overwriting 
+bindkey "^[f" forward-word
+bindkey "^[b" backward-word
+>>>>>>> Stashed changes
