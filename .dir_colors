@@ -483,4 +483,5 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3 # core
 .vimrc                       38;5;30
 .viminfo                     38;5;30
 .psql_history                38;5;30
+.gitignore                   38;5;30
 
