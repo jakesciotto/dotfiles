@@ -1,12 +1,18 @@
-# ----------------------------------------
+##################################################
 # .zshrc
 # 
 # Standard commands and settings across machines
+#
+# Table of contents
+# ---
+# 1. Editor
+# 2. Configuration
+# 3. Functions
+##################################################
+
 # ----------------------------------------
-
-
-# Default editor
-export EDITOR='vim'
+# :: 1. Editor
+# ----------------------------------------
 
 # Evaluations
 eval $(/opt/homebrew/bin/brew shellenv)
@@ -18,6 +24,10 @@ export PROMPT='%* [%n %F{190}%B%c%b%f]$ '
 eval $(gdircolors -b ~/.dir_colors)
 export LS_COLORS
 
+# ----------------------------------------
+# :: 2. Configuration 
+# ----------------------------------------
+
 # Path
 export PNPM_HOME="$HOME/Library/pnpm"
 typeset -U path
@@ -28,6 +38,9 @@ path=(
   $path
   "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 )
+
+# Default editor
+export EDITOR='vim'
 
 # Aliases
 alias ..='cd ..'
@@ -52,7 +65,9 @@ alias ip='ipconfig getifaddr en0'
 bindkey "^[f" forward-word
 bindkey "^[b" backward-word
 
-###### Functions #######
+# ----------------------------------------
+# :: 3. Functions
+# ----------------------------------------
 
 # 1. Copy and paste 
 autoload -Uz bracketed-paste-magic                            
@@ -68,12 +83,33 @@ zstyle :bracketed-paste-magic paste-init _paste_strip_ws
 # 2. Github commit to current branch
 
 gacp() {
-    if [ $# -lt 2 ]; then
-      echo "usage: gacp <branch> <message>"
+    if [ $# -lt 1 ]; then
+      echo "usage: gacp [branch] <message>"
       return 1
     fi
-    local branch="$1"
-    shift
+
+    local branch
+    # If the first arg matches a local branch name, treat it as the target
+    if [ $# -ge 2 ] && git show-ref --verify --quiet "refs/heads/$1"; then
+      branch="$1"
+      shift
+    else
+      # Detect the default branch: prefer origin/HEAD, fall back to main/master
+      branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
+      if [ -z "$branch" ]; then
+        for candidate in main master; do
+          if git show-ref --verify --quiet "refs/heads/$candidate"; then
+            branch="$candidate"
+            break
+          fi
+        done
+      fi
+      if [ -z "$branch" ]; then
+        echo "could not detect default branch; pass it explicitly"
+        return 1
+      fi
+    fi
+
     local message="$*"
     git add -A && git commit -m "$message" && git push origin "$branch"
   }
