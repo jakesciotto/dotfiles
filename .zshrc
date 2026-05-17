@@ -65,7 +65,7 @@ _paste_strip_ws() {
 
 zstyle :bracketed-paste-magic paste-init _paste_strip_ws   
 
-# 2. GitHub commit to current branch
+# 2. Github commit to current branch
 
 gacp() {
     if [ $# -lt 2 ]; then
@@ -78,3 +78,31 @@ gacp() {
     git add -A && git commit -m "$message" && git push origin "$branch"
   }
 
+
+# 3. Github merge function
+
+gmerge() {
+    if [ $# -lt 1 ]; then
+      echo "usage: gmerge <message>"
+      return 1
+    fi
+    local message="$*"
+    local source target
+    source=$(git symbolic-ref --short HEAD) || return 1
+
+    if [ "$source" = "main" ]; then
+      echo "already on main — nothing to merge upward"
+      return 1
+    elif [ "$source" = "staging" ]; then
+      target="main"
+    else
+      target="staging"
+    fi
+
+    echo "merging $source -> $target"
+    git checkout "$target" \
+      && git pull origin "$target" \
+      && git merge --no-ff "$source" -m "$message" \
+      && git push origin "$target" \
+      && git checkout "$source"
+  }
