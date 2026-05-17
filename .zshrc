@@ -45,9 +45,16 @@ alias tokens='npx ccusage@latest blocks --live'
 
 # Networking
 alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
-alias ip='ipconfig getifaddr en0'
+alias ip='ipconfig getifaddr en0'   
 
-# Copy and paste 
+# Binds correctly the option+left arrow and option+right arrow key combindations
+# that the shell is overwriting 
+bindkey "^[f" forward-word
+bindkey "^[b" backward-word
+
+###### Functions #######
+
+# 1. Copy and paste 
 autoload -Uz bracketed-paste-magic                            
 zle -N bracketed-paste bracketed-paste-magic                       
 
@@ -56,9 +63,18 @@ _paste_strip_ws() {
     PASTED=$(print -r -- "$PASTED" | sed -E 's/^[[:space:]]+//')
   } 
 
-zstyle :bracketed-paste-magic paste-init _paste_strip_ws      
+zstyle :bracketed-paste-magic paste-init _paste_strip_ws   
 
-# Binds correctly the option+left arrow and option+right arrow key combindations
-# that the shell is overwriting 
-bindkey "^[f" forward-word
-bindkey "^[b" backward-word
+# 2. GitHub commit to current branch
+
+gacp() {
+    if [ $# -lt 2 ]; then
+      echo "usage: gacp <branch> <message>"
+      return 1
+    fi
+    local branch="$1"
+    shift
+    local message="$*"
+    git add -A && git commit -m "$message" && git push origin "$branch"
+  }
+
