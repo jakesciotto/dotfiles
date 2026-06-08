@@ -55,6 +55,8 @@ alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias refresh='source ~/.zshrc'
 alias tokens='npx ccusage@latest blocks --live'
+alias c='claude'
+alias cc='cd /Users/jakesciotto/github/claude-config'
 
 # Networking
 alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
