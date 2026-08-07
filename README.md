@@ -15,7 +15,7 @@ git clone https://github.com/jakesciotto/dotfiles ~/github/dotfiles
 - `os/darwin.zsh`, `os/linux.zsh` -- OS-specific: brew and g-prefixed coreutils vs native GNU tools.
 - `hosts/<box>.zsh` -- optional per-box one-offs, sourced last. Intentional divergence goes here, tracked, instead of hand-edits on the box.
 - `.dir_colors` -- terminal colorization rules (256-color), shared by both `gdircolors` (mac) and `dircolors` (linux).
-- `.gitconfig` -- identity + per-repo PostHog includes. `jake.s@posthog.com` is the default on every box.
+- `.gitconfig` -- identity + per-repo PostHog includes. Personal (gmail) is the default on every box; work dirs override via `includeIf`.
 - `.gitconfig-posthog` -- work identity include for PostHog repo dirs.
 - `.gitconfig-signing` -- SSH commit signing; loaded only on the Macs via `includeIf "gitdir:/Users/"`, since only they hold the key. Keeps `commit.gpgsign=true` from breaking commits on the Linux boxes.
 - `~/.gitconfig-local` -- machine-local include, never tracked: credential helpers (`gh auth git-credential` paths differ per box) and any box-specific overrides.
@@ -29,8 +29,8 @@ Each box shows its fleet name in the prompt, in its own color: `m5pro` 212, `m4m
 
 ## Git identity notes
 
-- PostHog repos are matched by `includeIf "gitdir:..."` blocks in `.gitconfig`. Add one block per new PostHog repo dir.
-- Verify: `git -C ~/github/posthog config user.email` -> `jake.s@posthog.com`.
+- Work repos are matched by `includeIf "gitdir:..."` blocks in `.gitconfig` (posthog, posthog.com, gtm-toolkit, runbooks). Add one block per new work repo dir.
+- Verify: `git -C ~/github/posthog config user.email` -> `jake.s@posthog.com`; anywhere else -> gmail.
 - GitHub squash-merges attribute commits by the **account's** verified email, independent of this local config. Keep `jake.s@posthog.com` verified at github.com/settings/emails.
 
 ## Hammerspoon setup

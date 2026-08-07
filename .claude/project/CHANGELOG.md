@@ -53,7 +53,7 @@ Copy and customize this template for new releases:
 ### Changed
 
 - `.zshrc` split into shared core + OS layer; prompt shows the fleet box name in a per-box color (m5pro 212, m4max 39, vinelab 120, fedora 196)
-- `.gitconfig` default identity comment corrected: jake.s@posthog.com is the default everywhere, not gmail
+- `.gitconfig` default identity settled: personal (gmail) default on every box, work identity only via `includeIf` work-dir blocks; m4max is a personal machine and must never default to work
 
 ---
 
