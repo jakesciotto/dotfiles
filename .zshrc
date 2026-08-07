@@ -26,7 +26,7 @@ BOX=$(sed -n 's/.*host\.name=\([^",]*\).*/\1/p' ~/.claude/settings.local.json 2>
 
 case $BOX in
   m5pro)   BOX_COLOR=212 ;;
-  m4max)   BOX_COLOR=212 ;;
+  m4max)   BOX_COLOR=39 ;;
   vinelab) BOX_COLOR=120 ;;
   fedora)  BOX_COLOR=196 ;;
   *)       BOX_COLOR=245 ;;

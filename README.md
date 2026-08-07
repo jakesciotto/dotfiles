@@ -25,7 +25,7 @@ git clone https://github.com/jakesciotto/dotfiles ~/github/dotfiles
 
 ## Fleet identity and prompt
 
-Each box shows its fleet name in the prompt, in its own color: `m5pro` and `m4max` 212, `vinelab` 120, `fedora` 196. The name comes from `host.name` in `~/.claude/settings.local.json` (seeded by claude-config's `bootstrap.sh`), because hostnames are DHCP-unreliable on the Macs. Fallback is `$HOST`.
+Each box shows its fleet name in the prompt, in its own color: `m5pro` 212, `m4max` 39, `vinelab` 120, `fedora` 196. The name comes from `host.name` in `~/.claude/settings.local.json` (seeded by claude-config's `bootstrap.sh`), because hostnames are DHCP-unreliable on the Macs. Fallback is `$HOST`.
 
 ## Git identity notes
 
