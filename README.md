@@ -18,6 +18,7 @@ git clone https://github.com/jakesciotto/dotfiles ~/github/dotfiles
 - `.gitconfig` -- identity + per-repo PostHog includes. `jake.s@posthog.com` is the default on every box.
 - `.gitconfig-posthog` -- work identity include for PostHog repo dirs.
 - `.gitconfig-signing` -- SSH commit signing; loaded only on the Macs via `includeIf "gitdir:/Users/"`, since only they hold the key. Keeps `commit.gpgsign=true` from breaking commits on the Linux boxes.
+- `~/.gitconfig-local` -- machine-local include, never tracked: credential helpers (`gh auth git-credential` paths differ per box) and any box-specific overrides.
 - `.vimrc` -- yanked a good .vimrc from online
 - `.hammerspoon/init.lua` -- mac only; binds `Cmd+Shift+V` to clean-paste (strips leading whitespace from clipboard before pasting)
 - `archive/` -- not deployed, historical reference

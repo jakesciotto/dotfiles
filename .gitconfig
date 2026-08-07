@@ -15,6 +15,10 @@
 	path = ~/.gitconfig-posthog
 [includeIf "gitdir:/Users/"]
 	path = ~/.gitconfig-signing
+# Machine-local git config (credential helpers, box-specific overrides).
+# Never tracked; missing file is fine.
+[include]
+	path = ~/.gitconfig-local
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

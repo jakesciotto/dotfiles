@@ -48,6 +48,7 @@ Copy and customize this template for new releases:
 - `hosts/<box>.zsh` convention for tracked per-box tweaks
 - `.gitconfig-signing`: SSH signing config, loaded only on Macs via `includeIf "gitdir:/Users/"`
 - `.gitconfig` and `.gitconfig-posthog` now tracked
+- `~/.gitconfig-local` include: machine-local credential helpers and overrides, never tracked
 
 ### Changed
 
