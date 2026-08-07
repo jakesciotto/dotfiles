@@ -1,0 +1,22 @@
+# This is Git's per-user configuration file.
+# jake.s@posthog.com is the default identity on every box; the per-repo
+# includes below keep PostHog repos explicit. Signing config lives in
+# .gitconfig-signing and only loads on the Macs, where the key exists.
+[user]
+	name = jake sciotto
+	email = jake.s@posthog.com
+[includeIf "gitdir:~/github/posthog/"]
+	path = ~/.gitconfig-posthog
+[includeIf "gitdir:~/github/posthog.com/"]
+	path = ~/.gitconfig-posthog
+[includeIf "gitdir:~/github/gtm-toolkit/"]
+	path = ~/.gitconfig-posthog
+[includeIf "gitdir:~/github/runbooks/"]
+	path = ~/.gitconfig-posthog
+[includeIf "gitdir:/Users/"]
+	path = ~/.gitconfig-signing
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

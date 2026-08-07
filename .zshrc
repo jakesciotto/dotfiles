@@ -1,42 +1,54 @@
 ##################################################
 # .zshrc
-# 
-# Standard commands and settings across machines
+#
+# Shared core for every box. OS-specific config
+# lives in os/darwin.zsh and os/linux.zsh; a box
+# adds hosts/<box>.zsh for one-off tweaks.
 #
 # Table of contents
 # ---
-# 1. Editor
+# 1. Fleet identity + prompt
 # 2. Configuration
 # 3. Functions
+# 4. OS + host layers
 ##################################################
 
-# ----------------------------------------
-# :: 1. Editor
-# ----------------------------------------
-
-# Evaluations
-eval $(/opt/homebrew/bin/brew shellenv)
-
-# Prompt
-export PROMPT='%* [%n %F{190}%B%c%b%f]$ '
-
-# Custom colors for file extensions
-eval $(gdircolors -b ~/.dir_colors)
-export LS_COLORS
+DOTFILES="$HOME/github/dotfiles"
 
 # ----------------------------------------
-# :: 2. Configuration 
+# :: 1. Fleet identity + prompt
+# ----------------------------------------
+
+# Box name comes from the Claude telemetry config: hostnames are
+# DHCP-unreliable on the Macs.
+BOX=$(sed -n 's/.*host\.name=\([^",]*\).*/\1/p' ~/.claude/settings.local.json 2>/dev/null | head -1)
+[[ -z $BOX ]] && BOX=${HOST%%.*}
+
+case $BOX in
+  m5pro)   BOX_COLOR=212 ;;
+  m4max)   BOX_COLOR=212 ;;
+  vinelab) BOX_COLOR=120 ;;
+  fedora)  BOX_COLOR=196 ;;
+  *)       BOX_COLOR=245 ;;
+esac
+
+export PROMPT="%* [%F{$BOX_COLOR}${BOX}%f %F{190}%B%c%b%f]$ "
+
+# iTerm2 status bar: publish this box's fleet name as \(user.box).
+if [[ -n $ITERM_SESSION_ID ]]; then
+  printf '\e]1337;SetUserVar=box=%s\a' "$(printf %s "$BOX" | base64)"
+fi
+
+# ----------------------------------------
+# :: 2. Configuration
 # ----------------------------------------
 
 # Path
-export PNPM_HOME="$HOME/Library/pnpm"
 typeset -U path
 path=(
-  /opt/homebrew/opt/openjdk@17/bin
+  $HOME/bin
   $HOME/.local/bin
-  $PNPM_HOME
   $path
-  "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 )
 
 # Default editor
@@ -46,24 +58,17 @@ export EDITOR='vim'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias docs='cd /Users/jakesciotto/Documents/customers'
-alias ls='gls --color=auto'
 alias ll='ls -al'
 alias path='echo -e ${PATH//:/\\n}'
-alias trash='trash -v'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 alias refresh='source ~/.zshrc'
 alias tokens='npx ccusage@latest blocks --live'
 alias c='claude'
-alias cc='cd /Users/jakesciotto/github/claude-config'
+alias cc='cd ~/github/claude-config'
 
-# Networking
-alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
-alias ip='ipconfig getifaddr en0'   
-
-# Binds correctly the option+left arrow and option+right arrow key combindations
-# that the shell is overwriting 
+# Binds correctly the option+left arrow and option+right arrow key combinations
+# that the shell is overwriting
 bindkey "^[f" forward-word
 bindkey "^[b" backward-word
 
@@ -71,16 +76,16 @@ bindkey "^[b" backward-word
 # :: 3. Functions
 # ----------------------------------------
 
-# 1. Copy and paste 
-autoload -Uz bracketed-paste-magic                            
-zle -N bracketed-paste bracketed-paste-magic                       
+# 1. Copy and paste
+autoload -Uz bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
 
-_paste_strip_ws() {                                           
-    PASTED=${PASTED//$'\r'/$'\n'}                               
+_paste_strip_ws() {
+    PASTED=${PASTED//$'\r'/$'\n'}
     PASTED=$(print -r -- "$PASTED" | sed -E 's/^[[:space:]]+//')
-  } 
+  }
 
-zstyle :bracketed-paste-magic paste-init _paste_strip_ws   
+zstyle :bracketed-paste-magic paste-init _paste_strip_ws
 
 # 2. Github commit to current branch
 
@@ -129,7 +134,7 @@ gmerge() {
     source=$(git symbolic-ref --short HEAD) || return 1
 
     if [ "$source" = "main" ]; then
-      echo "already on main — nothing to merge upward"
+      echo "already on main - nothing to merge upward"
       return 1
     elif [ "$source" = "staging" ]; then
       target="main"
@@ -144,3 +149,14 @@ gmerge() {
       && git push origin "$target" \
       && git checkout "$source"
   }
+
+# ----------------------------------------
+# :: 4. OS + host layers
+# ----------------------------------------
+
+case "$(uname -s)" in
+  Darwin) source "$DOTFILES/os/darwin.zsh" ;;
+  Linux)  source "$DOTFILES/os/linux.zsh" ;;
+esac
+
+[[ -f "$DOTFILES/hosts/$BOX.zsh" ]] && source "$DOTFILES/hosts/$BOX.zsh"
