@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Preview every rule in .dir_colors by printing the pattern with its ANSI code applied.
-# Usage: ./scripts/preview-dir-colors.sh [path/to/.dir_colors]
+# Preview every rule in config/dircolors by printing the pattern with its ANSI code applied.
+# Usage: ./scripts/preview-dir-colors.sh [path/to/dircolors]
 
 set -euo pipefail
 
-FILE="${1:-$(dirname "$0")/../.dir_colors}"
+FILE="${1:-$(dirname "$0")/../config/dircolors}"
 
 if [[ ! -f "$FILE" ]]; then
   echo "dir_colors file not found: $FILE" >&2

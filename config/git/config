@@ -1,0 +1,31 @@
+# This is Git's per-user configuration file. Git reads it from
+# ~/.config/git/config, but only when ~/.gitconfig does not exist.
+# Personal (gmail) is the default on every box; work dirs get
+# jake.s@posthog.com via the includeIf blocks below - add one per new
+# work repo dir. Signing config lives in ~/.config/git/signing; install.sh
+# links that file only where the signing key exists.
+[user]
+	name = jake sciotto
+	email = jake.sciotto@gmail.com
+[includeIf "gitdir:~/github/posthog/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/posthog.com/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/gtm-toolkit/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/runbooks/"]
+	path = ~/.config/git/posthog
+# install.sh links ~/.config/git/signing only where
+# ~/.ssh/id_ed25519_signing.pub exists. Git ignores a missing include, so a
+# box without the key never sets commit.gpgsign=true.
+[include]
+	path = ~/.config/git/signing
+# Machine-local git config (credential helpers, box-specific overrides).
+# Never tracked; missing file is fine.
+[include]
+	path = ~/.config/git/local
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

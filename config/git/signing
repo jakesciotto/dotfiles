@@ -1,6 +1,6 @@
-# SSH commit signing. Included only where the key exists (the Macs,
-# via includeIf "gitdir:/Users/" in .gitconfig). PostHog rejects
-# unsigned commits on every branch.
+# SSH commit signing. install.sh links this file into ~/.config/git only
+# where ~/.ssh/id_ed25519_signing.pub exists. PostHog rejects unsigned
+# commits on every branch.
 [user]
 	signingkey = /Users/jakesciotto/.ssh/id_ed25519_signing.pub
 [gpg]
