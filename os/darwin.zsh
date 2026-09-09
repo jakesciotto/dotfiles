@@ -3,7 +3,7 @@
 eval $(/opt/homebrew/bin/brew shellenv)
 
 # Custom colors for file extensions
-eval $(gdircolors -b ~/.dir_colors)
+[ -r ~/.config/dircolors ] && eval $(gdircolors -b ~/.config/dircolors)
 export LS_COLORS
 alias ls='gls -a --color=auto'
 
