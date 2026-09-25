@@ -51,6 +51,7 @@ if [ -f "$HOME/.gitconfig-local" ] && [ ! -e "$HOME/.config/git/local" ]; then
 fi
 
 link .zshrc .zshrc
+link .zshenv .zshenv
 link config/dircolors .config/dircolors
 link config/git/config .config/git/config
 link config/git/posthog .config/git/posthog
