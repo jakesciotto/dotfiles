@@ -15,6 +15,20 @@
 	path = ~/.config/git/posthog
 [includeIf "gitdir:~/github/runbooks/"]
 	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/hackathon-churn-analysis/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/hogpilot/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/posthog-skills/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/hog-finder/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/coherence/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/reach/"]
+	path = ~/.config/git/posthog
+[includeIf "gitdir:~/github/ticket-watch/"]
+	path = ~/.config/git/posthog
 # install.sh links ~/.config/git/signing only where
 # ~/.ssh/id_ed25519_signing.pub exists. Git ignores a missing include, so a
 # box without the key never sets commit.gpgsign=true.
