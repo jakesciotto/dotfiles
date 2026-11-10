@@ -14,8 +14,7 @@ brew "gitleaks"
 
 # languages and package managers
 brew "node"
-brew "node@22"
-brew "nvm"
+brew "fnm"
 brew "corepack", link: false
 brew "pnpm"
 brew "openjdk@17"

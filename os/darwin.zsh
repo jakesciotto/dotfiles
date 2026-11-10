@@ -16,6 +16,9 @@ path=(
   "/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 )
 
+# Per-repo node from .nvmrc. Must run after brew shellenv, which puts brew's node first.
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --version-file-strategy=recursive)"
+
 # PostHog Desktop bundles its own Claude CLI and sets CLAUDE_CONFIG_DIR to its own
 # data dir, so it keeps a SECOND plugin install that `claude` on PATH never touches.
 # `pcode` runs that CLI against that config dir: `pcode plugin list`, `pcode plugin update <p>`.
