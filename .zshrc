@@ -65,7 +65,7 @@ alias mkdir='mkdir -pv'
 alias refresh='source ~/.zshrc'
 alias tokens='npx ccusage@latest blocks --live'
 alias c='claude'
-alias cc='cd ~/github/claude-config'
+alias cc='cd ~/github/agent-kit'
 
 # Binds correctly the option+left arrow and option+right arrow key combinations
 # that the shell is overwriting
