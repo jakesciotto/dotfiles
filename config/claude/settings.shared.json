@@ -1,0 +1,104 @@
+{
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_LOG_TOOL_DETAILS": "1",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
+    "OTEL_METRIC_EXPORT_INTERVAL": "30000"
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "NotebookEdit",
+      "TodoWrite(*)",
+      "TaskOutput(*)",
+      "TaskStop(*)",
+      "WebSearch(*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)"
+    ],
+    "ask": [
+      "Bash(sudo:*)",
+      "Bash(chmod 777:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -fd:*)",
+      "Bash(npm publish:*)",
+      "Bash(eval:*)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(**/*credential*)",
+      "Read(**/*secret*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)"
+    ],
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/check-drift.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/session-summary.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "[ -f '/Users/jakesciotto/.config/herdr-app/mods/claude-usage/tap.sh' ] && exec sh '/Users/jakesciotto/.config/herdr-app/mods/claude-usage/tap.sh'; /usr/bin/python3 \"$HOME/.claude/scripts/statusline-usage.py\"",
+    "refreshInterval": 1
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": false,
+    "code-review@claude-plugins-official": false,
+    "code-simplifier@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "claude-md-management@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": false,
+    "claude-code-setup@claude-plugins-official": false,
+    "posthog@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false,
+    "supabase@claude-plugins-official": true,
+    "vercel@claude-plugins-official": false
+  },
+  "extraKnownMarketplaces": {
+    "PostHog-skills": {
+      "source": {
+        "source": "github",
+        "repo": "PostHog/skills"
+      }
+    }
+  },
+  "promptSuggestionEnabled": false,
+  "awaySummaryEnabled": false,
+  "tui": "fullscreen",
+  "autoMemoryDirectory": "~/.claude/memory",
+  "skipWorkflowUsageWarning": true,
+  "preferredNotifChannel": "notifications_disabled",
+  "switchModelsOnFlag": false,
+  "agentPushNotifEnabled": true
+}

@@ -24,11 +24,36 @@ git clone https://github.com/jakesciotto/dotfiles ~/github/dotfiles
 - `config/iterm2/fleet.json` -- mac only; iTerm2 Dynamic Profile named `Fleet`: Menlo 11, `xterm-256color`, `Cmd+Backspace` sends `Ctrl-U`. Links into `~/Library/Application Support/iTerm2/DynamicProfiles/`; every setting not listed inherits from the box's default profile. Set it as default once: Settings > Profiles > Fleet > Other Actions > Set as Default. iTerm2 reloads the folder on change; after editing the file, `touch` the link or restart iTerm2.
 - `Brewfile` -- mac only; `brew bundle --file ~/github/dotfiles/Brewfile`. `install.sh` does not run it.
 - `scripts/preview-dir-colors.sh` -- prints every `config/dircolors` rule in its own color
+- `config/claude/` -- the public half of the Claude Code setup. See "Claude Code" below.
 - `archive/` -- not deployed, historical reference
+
+## Claude Code
+
+`install.sh` links the shared, public-safe parts of `~/.claude` from `config/claude/`. This replaces the retired claude-config repo, and `install.sh` moves a box off it on the first run.
+
+| `~/.claude` path | Source | Notes |
+|---|---|---|
+| `CLAUDE.md`, `agents/` | Link to `config/claude/` | Public |
+| `skills/<name>`, `hooks/<name>.sh` | One link per entry | The dirs stay real, because plugins and hook state also write there |
+| `scripts/statusline-usage.py` | Link | The `statusLine` command runs it |
+| `rules/jake.md` | Seeded once from the template | Live box state. On m5pro it links into dotfiles-private |
+| `settings.json` | A real file on each box | Never a link. Claude Code writes the model, effort and auto-mode survey into it |
+| `settings.local.json`, `references/`, `memory/` | Real, local | In no repo. `settings.local.json` applies only to sessions started in `$HOME` |
+
+**Shared settings are opt-in per box.** `config/claude/settings.shared.json` holds the keys every box can share: hooks, permissions, telemetry flags, the status line, plugin toggles and UI preferences. A box joins by creating `~/.config/claude/shared-settings`, and then `install.sh` runs `config/claude/apply-shared-settings.sh`:
+
+1. A shared value wins over the box's value.
+2. A shared array, such as an allow list, joins the box's array. The box keeps its own entries.
+3. A key only the box has stays. hogpilot and other work plugins live in the m5pro file only.
+4. `model`, `modelSettings`, `effortLevel` and `autoMode` are never shared.
+
+Delete the marker to leave the layer. Deleting a key from the shared file does not remove it from a box. `apply-shared-settings.sh --check` names the keys a box has drifted on, and `check-drift.sh` runs that check at every session start.
+
+Never put a customer name, an internal table name, an IP address or a secret under `config/claude/`. The work skills live in the private repo `dotfiles-private`, on the work laptop only.
 
 ## Fleet identity and prompt
 
-Each box shows its fleet name in the prompt, in its own color: `m5pro` 212, `m4max` 39, `vinelab` 120, `fedora` 196. The name comes from `host.name` in `~/.claude/settings.local.json` (seeded by claude-config's `bootstrap.sh`), because hostnames are DHCP-unreliable on the Macs. Fallback is `$HOST`.
+Each box shows its fleet name in the prompt, in its own color: `m5pro` 212, `m4max` 39, `vinelab` 120, `fedora` 196. The name comes from `host.name` in `~/.claude/settings.local.json` (seeded by `install.sh`), because hostnames are DHCP-unreliable on the Macs. Fallback is `$HOST`.
 
 ## Git identity notes
 
